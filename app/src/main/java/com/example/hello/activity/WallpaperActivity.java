@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.example.hello.R;
 import com.example.hello.adapter.CatAdapter;
+import com.example.hello.adapter.WallAdapter;
 import com.example.hello.bean.CatBean;
+import com.example.hello.bean.WallBean;
 import com.example.hello.constant.Constant;
 import com.example.hello.util.JsonU;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -28,7 +30,7 @@ import okhttp3.Call;
  * Created by john on 2017/11/16.
  */
 
-public class CatActivity extends AppCompatActivity {
+public class WallpaperActivity extends AppCompatActivity {
 
     public final String TAG = this.getClass().getSimpleName();
 
@@ -36,14 +38,14 @@ public class CatActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout srl;
 
-    private CatAdapter catAdapter;
-    private List<CatBean.DataBean.RagdollBean> cats;
+    private WallAdapter catAdapter;
+    private List<WallBean.DataBean.HandBean> cats;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cat);
+        setContentView(R.layout.activity_wallpaper);
         init();
         initView();
         getData();
@@ -51,13 +53,13 @@ public class CatActivity extends AppCompatActivity {
 
     private void init() {
         cats = new ArrayList<>();
-        catAdapter = new CatAdapter(cats, this);
+        catAdapter = new WallAdapter(cats, this);
     }
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.arrow_back);
-        toolbar.setTitle("布偶猫");
+        toolbar.setTitle("手绘");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,12 +86,12 @@ public class CatActivity extends AppCompatActivity {
     private void getData() {
         OkHttpUtils
                 .get()
-                .url(Constant.CAT)
+                .url(Constant.WALLPAPER)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(CatActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WallpaperActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
                         if (srl.isRefreshing()) {
                             srl.setRefreshing(false);
                         }
@@ -98,11 +100,11 @@ public class CatActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response, int id) {
 //                        Log.e(TAG, "response==" + response);
-                        CatBean catBean = JsonU.GsonToBean(response, CatBean.class);
+                        WallBean catBean = JsonU.GsonToBean(response, WallBean.class);
                         if (null != catBean) {
-                            if (null != catBean.getData().getRagdoll() && catBean.getData().getRagdoll().size() > 0) {
+                            if (null != catBean.getData().getHand() && catBean.getData().getHand().size() > 0) {
                                 cats.clear();
-                                cats.addAll(catBean.getData().getRagdoll());
+                                cats.addAll(catBean.getData().getHand());
                                 catAdapter.notifyDataSetChanged();
                             }
                         } else {

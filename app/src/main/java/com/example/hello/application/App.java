@@ -20,7 +20,6 @@ public class App extends Application {
         super.onCreate();
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
 
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
@@ -29,6 +28,5 @@ public class App extends Application {
 
         OkHttpUtils.initClient(okHttpClient);
     }
-
 
 }
