@@ -9,7 +9,7 @@ public class Constant {
     public static final String TOKEN = "https://curiousbaby.github.io";
     //私有api
     public static final String BG = TOKEN + "/hello/file/images/bg/";
-    public static final int BG_AMOUNT = 10;
+    public static final int BG_AMOUNT = 11;
     public static final String BG_TYPE = ".jpg";
     public static final String CAT = TOKEN + "/hello/api/cat.json";
     public static final String WALLPAPER = TOKEN + "/hello/api/wallpaper.json";
