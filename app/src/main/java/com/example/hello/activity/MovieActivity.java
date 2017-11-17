@@ -1,10 +1,10 @@
 package com.example.hello.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +13,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.hello.R;
-import com.example.hello.adapter.CatAdapter;
-import com.example.hello.bean.CatBean;
+import com.example.hello.adapter.MovieAdapter;
+import com.example.hello.adapter.WallAdapter;
+import com.example.hello.bean.MovieBean;
+import com.example.hello.bean.WallBean;
 import com.example.hello.constant.Constant;
 import com.example.hello.util.JsonU;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -29,36 +32,38 @@ import okhttp3.Call;
  * Created by john on 2017/11/16.
  */
 
-public class CatActivity extends AppCompatActivity {
+public class MovieActivity extends AppCompatActivity {
 
     public final String TAG = this.getClass().getSimpleName();
 
-    private Toolbar toolbar;
 
     private SwipeRefreshLayout srl;
 
-    private CatAdapter catAdapter;
-    private List<CatBean.DataBean.RagdollBean> cats;
+    private MovieAdapter movieAdapter;
+    private List<MovieBean.DataBean.MoviesBean> datas;
+
+    private CatLoadingView load;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cat);
+        setContentView(R.layout.activity_movie);
         init();
         initView();
-        getData();
+        getData(true);
     }
 
     private void init() {
-        cats = new ArrayList<>();
-        catAdapter = new CatAdapter(cats, this);
+        datas = new ArrayList<>();
+        movieAdapter = new MovieAdapter(datas, this);
     }
 
     private void initView() {
-        toolbar = findViewById(R.id.toolbar);
+        load = new CatLoadingView();
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.arrow_back);
-        toolbar.setTitle("布偶猫");
+        toolbar.setTitle("最近");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,56 +76,52 @@ public class CatActivity extends AppCompatActivity {
         RecyclerView rlv = findViewById(R.id.rlv);
 
         rlv.setHasFixedSize(true);
-        rlv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        rlv.setAdapter(catAdapter);
-        catAdapter.setOnItemClickListener(new CatAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent i = new Intent(CatActivity.this, VpActivity.class);
-                i.putExtra("index", position);
-                i.putStringArrayListExtra("imageUrls", getUrls());
-//                startActivity(i);
-            }
-        });
+        rlv.setLayoutManager(new LinearLayoutManager(this));
+        rlv.setAdapter(movieAdapter);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getData();
+                getData(false);
             }
         });
 
     }
 
-    private void getData() {
+    private void getData(boolean showDialog) {
+        if (showDialog) {
+            load.show(getSupportFragmentManager(), "");
+        }
         OkHttpUtils
                 .get()
-                .url(Constant.CAT)
+                .url(Constant.MOVIE)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(CatActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
                         if (srl.isRefreshing()) {
                             srl.setRefreshing(false);
                         }
+                        load.dismiss();
+                        Toast.makeText(MovieActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
 //                        Log.e(TAG, "response==" + response);
-                        CatBean catBean = JsonU.GsonToBean(response, CatBean.class);
-                        if (null != catBean) {
-                            if (null != catBean.getData().getRagdoll() && catBean.getData().getRagdoll().size() > 0) {
-                                cats.clear();
-                                cats.addAll(catBean.getData().getRagdoll());
-                                catAdapter.notifyDataSetChanged();
+                        MovieBean bean = JsonU.GsonToBean(response, MovieBean.class);
+                        if (null != bean) {
+                            if (null != bean.getData().getMovies() && bean.getData().getMovies().size() > 0) {
+                                datas.clear();
+                                datas.addAll(bean.getData().getMovies());
+                                movieAdapter.notifyDataSetChanged();
                             }
                         } else {
-                            Log.e(TAG, "null == catBean");
+                            Log.e(TAG, "null == bean");
                         }
                         if (srl.isRefreshing()) {
                             srl.setRefreshing(false);
                         }
+                        load.dismiss();
                     }
 
                 });
@@ -135,14 +136,6 @@ public class CatActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
-    private ArrayList<String> getUrls() {
-        ArrayList<String> str = new ArrayList<>();
-        for (CatBean.DataBean.RagdollBean ra : cats) {
-            str.add(ra.getImageurl());
-        }
-        return str;
-    }
 
 }
 

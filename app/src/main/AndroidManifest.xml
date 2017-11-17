@@ -40,6 +40,15 @@
             android:name=".activity.WallpaperActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NormalNoActionBar" />
+        <activity
+            android:name=".activity.MovieActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NormalNoActionBar" />
+
+        <activity
+            android:name=".activity.VpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
     </application>

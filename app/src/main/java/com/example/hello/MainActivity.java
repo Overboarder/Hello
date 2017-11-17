@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.hello.activity.ArticleActivity;
 import com.example.hello.activity.CatActivity;
+import com.example.hello.activity.MovieActivity;
 import com.example.hello.activity.WallpaperActivity;
 import com.example.hello.activity.WeatherActivity;
 import com.example.hello.bean.WeaBean;
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity
             R.string.notice_random2, R.string.notice_random3,
             R.string.notice_random4, R.string.notice_random5, R.string.notice_random6};
     private int position;
-
 
     private ImageView tv_bg;
 
@@ -79,14 +79,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-//        Log.e(TAG, "onResume()");
         super.onResume();
         setBg();
     }
 
     private void setBg() {
         String bg = Constant.BG + new Random().nextInt(Constant.BG_AMOUNT) + Constant.BG_TYPE;
-//        Log.e(TAG, "bg==" + bg);
         Glide.with(this)
                 .load(bg)
                 .into(tv_bg);
@@ -118,6 +116,8 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, WeatherActivity.class);
         } else if (id == R.id.nav_hand) {
             intent = new Intent(this, WallpaperActivity.class);
+        } else if (id == R.id.nav_movie) {
+            intent = new Intent(this, MovieActivity.class);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

@@ -5,25 +5,27 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hello.R;
-import com.example.hello.adapter.CatAdapter;
-import com.example.hello.bean.CatBean;
 import com.example.hello.bean.WeaBean;
+import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
+import com.example.hello.util.CalU;
 import com.example.hello.util.JsonU;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -37,11 +39,17 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
     private Toolbar toolbar;
 
+    private ScrollView scroll;
     private SwipeRefreshLayout srl_main;
 
     private TextView tv_text, tv_tem, tv_wind, tv_wet, tv_visibility, tv_pressure,
             tv_air_quality, tv_sunrise, tv_sunset, tv_dressing, tv_uv, tv_flu, tv_sport,
             tv_tomorrow, tv_totext, tv_towind, tv_totem, tv_future;
+    private ImageView iv_pic;
+
+    private String currentCity;
+
+    private CatLoadingView load;
 
 
     @Override
@@ -49,13 +57,15 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         initView();
-        getData();
+        init();
     }
 
     private void initView() {
+        load = new CatLoadingView();
+        scroll = findViewById(R.id.scroll);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.arrow_back);
-        toolbar.setTitle("盐城");
+        toolbar.setTitle("天气");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +78,11 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         srl_main.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getData();
+                getData(false);
             }
         });
         tv_text = findViewById(R.id.tv_text);
+        iv_pic = findViewById(R.id.iv_pic);
         tv_tem = findViewById(R.id.tv_tem);
         tv_wind = findViewById(R.id.tv_wind);
         tv_wet = findViewById(R.id.tv_wet);
@@ -92,27 +103,64 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
         tv_air_quality.setOnClickListener(this);
 
-        tv_dressing.setOnClickListener(this);
-        tv_uv.setOnClickListener(this);
-        tv_flu.setOnClickListener(this);
-        tv_sport.setOnClickListener(this);
-
         tv_future.setOnClickListener(this);
+    }
+
+    private void init() {
+        //初始默认盐城
+        currentCity = Constant.YANCHENG;
+        getSupportActionBar().setTitle(R.string.city_yancheng);
+        getData(true);
 
     }
 
-    private void getData() {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_yancheng) {
+            currentCity = Constant.YANCHENG;
+            getSupportActionBar().setTitle(R.string.city_yancheng);
+            getData(true);
+            return true;
+        }
+        if (id == R.id.action_wuxi) {
+            currentCity = Constant.WUXI;
+            getSupportActionBar().setTitle(R.string.city_wuxi);
+            getData(true);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void getData(boolean showDialog) {
+        if (showDialog) {
+            load.show(getSupportFragmentManager(), "");
+        }
         OkHttpUtils
                 .get()
-                .url(Constant.WEATHER + "?city=" + Constant.YANCHENG)
+                .url(Constant.WEATHER + "?city=" + currentCity)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(WeatherActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
                         if (srl_main.isRefreshing()) {
                             srl_main.setRefreshing(false);
                         }
+                        load.dismiss();
+                        Toast.makeText(WeatherActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -126,6 +174,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                         if (srl_main.isRefreshing()) {
                             srl_main.setRefreshing(false);
                         }
+                        load.dismiss();
                     }
                 });
     }
@@ -140,7 +189,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 if (null != weather) {
                     new AlertDialog.Builder(this)
                             .setMessage(weather.getWeather().get(0).getToday().getSuggestion().getDressing().getDetails())
-                            .setCancelable(true)
                             .create()
                             .show();
                 }
@@ -149,7 +197,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 if (null != weather) {
                     new AlertDialog.Builder(this)
                             .setMessage(weather.getWeather().get(0).getToday().getSuggestion().getUv().getDetails())
-                            .setCancelable(true)
                             .create()
                             .show();
                 }
@@ -158,7 +205,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 if (null != weather) {
                     new AlertDialog.Builder(this)
                             .setMessage(weather.getWeather().get(0).getToday().getSuggestion().getFlu().getDetails())
-                            .setCancelable(true)
                             .create()
                             .show();
                 }
@@ -167,7 +213,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 if (null != weather) {
                     new AlertDialog.Builder(this)
                             .setMessage(weather.getWeather().get(0).getToday().getSuggestion().getSport().getDetails())
-                            .setCancelable(true)
                             .create()
                             .show();
                 }
@@ -181,15 +226,18 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-
     private WeaBean weather;
 
     public void updateData(WeaBean weaBean) {
         WeaBean.WeatherBean w = weaBean.getWeather().get(0);
+        int weatype = CalU.calWea(Integer.valueOf(w.getNow().getCode()));
+        //api 21
+        scroll.setBackground(getDrawable(ConsLocal.weaBg[weatype]));
+        iv_pic.setImageResource(ConsLocal.weaIcon[weatype]);
         tv_text.setText(w.getNow().getText());
         tv_tem.setText(w.getNow().getTemperature() + "°");
         tv_wind.setText(w.getNow().getWind_direction() + "风" + w.getNow().getWind_scale() + "级");
-        tv_wet.setText(w.getNow().getHumidity() + "%");
+        tv_wet.setText(w.getNow().getHumidity());
         tv_visibility.setText(w.getNow().getVisibility() + "km");
         tv_pressure.setText(w.getNow().getPressure() + "hPa");
         tv_air_quality.setText(w.getNow().getAir_quality().getCity().getAqi() + "  " + w.getNow().getAir_quality().getCity().getQuality());
@@ -205,7 +253,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         tv_totext.setText(w.getFuture().get(1).getText());
         tv_towind.setText(w.getFuture().get(1).getWind());
         tv_totem.setText(w.getFuture().get(1).getLow() + "°~" + w.getFuture().get(1).getHigh() + "°");
-
 
     }
 

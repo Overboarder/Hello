@@ -15,4 +15,29 @@
     <string name="notice_random6">哈哈哈哈</string>
 
 
+    <!--City-->
+    <string name="city_yancheng">盐城</string>
+    <string name="city_wuxi">无锡</string>
+
+
+    <!--Weather-->
+    <string name="wea_1">晴</string>
+    <string name="wea_2">多云</string>
+    <string name="wea_3">阴</string>
+    <string name="wea_4">阵雨</string>
+    <string name="wea_5">小雨</string>
+    <string name="wea_6">中雨</string>
+    <string name="wea_7">大雨</string>
+    <string name="wea_8">暴雨</string>
+    <string name="wea_9">雨夹雪</string>
+    <string name="wea_10">雪</string>
+    <string name="wea_11">沙尘</string>
+    <string name="wea_12">雾</string>
+    <string name="wea_13">霾</string>
+    <string name="wea_14">风</string>
+    <string name="wea_15">冷</string>
+    <string name="wea_16">热</string>
+    <string name="wea_17">未知</string>
+
+
 </resources>

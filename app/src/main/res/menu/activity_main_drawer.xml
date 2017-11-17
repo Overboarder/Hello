@@ -5,24 +5,24 @@
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_bou"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="我知道布偶猫的" />
-        <item
-            android:id="@+id/nav_article"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="一篇小文" />
-        <item
             android:id="@+id/nav_weather"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_sun"
             android:title="晴天最好" />
         <item
+            android:id="@+id/nav_article"
+            android:icon="@drawable/ic_menu_book"
+            android:title="一篇小文" />
+        <item
+            android:id="@+id/nav_bou"
+            android:icon="@drawable/ic_menu_cat"
+            android:title="我知道布偶猫的" />
+        <item
             android:id="@+id/nav_hand"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_pic"
             android:title="蛮好看的" />
         <item
             android:id="@+id/nav_movie"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_movie"
             android:title="看看" />
     </group>
 

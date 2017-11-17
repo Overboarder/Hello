@@ -18,10 +18,26 @@ import java.util.List;
  * Created by john on 2017/11/16.
  */
 
-public class CatAdapter extends RecyclerView.Adapter<CatAdapter.ViewHolder> {
+public class CatAdapter extends RecyclerView.Adapter<CatAdapter.ViewHolder> implements View.OnClickListener {
+
+
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取position
+            mOnItemClickListener.onItemClick(v,(int)v.getTag());
+        }
+    }
+
+    //define interface
+    public static interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
 
     private List<CatBean.DataBean.RagdollBean> datas;
     private Context context;
+
+    private OnItemClickListener mOnItemClickListener = null;
 
     public CatAdapter(List<CatBean.DataBean.RagdollBean> datas, Context context) {
         this.datas = datas;
@@ -32,6 +48,7 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.ViewHolder> {
     public CatAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_cat, parent, false);
         ViewHolder holder = new ViewHolder(view);
+        view.setOnClickListener(this);
         return holder;
     }
 
@@ -40,6 +57,7 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.ViewHolder> {
         Glide.with(context)
                 .load(Constant.TOKEN + datas.get(position).getImageurl())
                 .into(holder.cat_photo);
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -55,6 +73,10 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.ViewHolder> {
             super(itemView);
             cat_photo = itemView.findViewById(R.id.cat_photo);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
 }

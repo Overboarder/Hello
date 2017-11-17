@@ -7,7 +7,6 @@ package com.example.hello.constant;
 public class Constant {
 
     public static final String TOKEN = "https://curiousbaby.github.io";
-
     //私有api
     public static final String BG = TOKEN + "/hello/file/images/bg/";
     public static final int BG_AMOUNT = 10;
@@ -20,12 +19,20 @@ public class Constant {
 
     //天气
     public static final String WEATHER = "http://tj.nineton.cn/Heart/index/all";
+    //无锡
+    public static final String WUXI = "CHJS010000";
     //盐城
     public static final String YANCHENG = "CHJS060000";
 
 
-    //每日一文
+    //每日一文,暂有问题返回400
     public static final String TODAYARTICLE = "https://interface.meiriyiwen.com/article/today?dev=1";
     public static final String RANDOMARTICLE = "https://interface.meiriyiwen.com/article/random?dev=1";
+
+
+    //猫眼电影
+    public static final String MOVIE = "http://m.maoyan.com/movie/list.json?type=hot&offset=0&limit=1000";
+
+
 
 }
