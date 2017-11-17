@@ -17,6 +17,7 @@ import com.example.hello.adapter.CatAdapter;
 import com.example.hello.bean.CatBean;
 import com.example.hello.constant.Constant;
 import com.example.hello.util.JsonU;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -41,13 +42,16 @@ public class CatActivity extends AppCompatActivity {
     private List<CatBean.DataBean.RagdollBean> cats;
 
 
+    private CatLoadingView view;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat);
         init();
         initView();
-        getData();
+        getData(true);
     }
 
     private void init() {
@@ -56,6 +60,7 @@ public class CatActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        view = new CatLoadingView();
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.arrow_back);
         toolbar.setTitle("布偶猫");
@@ -85,13 +90,16 @@ public class CatActivity extends AppCompatActivity {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getData();
+                getData(false);
             }
         });
 
     }
 
-    private void getData() {
+    private void getData(boolean showDialog) {
+        if (showDialog) {
+            view.show(getSupportFragmentManager(), "");
+        }
         OkHttpUtils
                 .get()
                 .url(Constant.CAT)
@@ -99,10 +107,11 @@ public class CatActivity extends AppCompatActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(CatActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
                         if (srl.isRefreshing()) {
                             srl.setRefreshing(false);
                         }
+                        view.dismiss();
+                        Toast.makeText(CatActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -121,6 +130,7 @@ public class CatActivity extends AppCompatActivity {
                         if (srl.isRefreshing()) {
                             srl.setRefreshing(false);
                         }
+                        view.dismiss();
                     }
 
                 });

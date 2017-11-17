@@ -9,11 +9,16 @@
     tools:showIn="@layout/app_bar_main">
 
 
-    <ImageView
-        android:id="@+id/tv_bg"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

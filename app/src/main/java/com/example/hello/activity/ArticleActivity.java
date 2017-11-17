@@ -84,6 +84,7 @@ public class ArticleActivity extends AppCompatActivity {
     private RequestQueue mQueue;
 
     private void getData() {
+        load.show(getSupportFragmentManager(), "");
         mQueue.add(today);
     }
 
@@ -105,15 +106,17 @@ public class ArticleActivity extends AppCompatActivity {
                     if (srl.isRefreshing()) {
                         srl.setRefreshing(false);
                     }
+                    load.dismiss();
                 }
             }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
             Log.e("onErrorResponse TAG", error.getMessage(), error);
-            Toast.makeText(ArticleActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
             if (srl.isRefreshing()) {
                 srl.setRefreshing(false);
             }
+            load.dismiss();
+            Toast.makeText(ArticleActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -131,15 +134,17 @@ public class ArticleActivity extends AppCompatActivity {
                     if (srl.isRefreshing()) {
                         srl.setRefreshing(false);
                     }
+                    load.dismiss();
                 }
             }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
             Log.e("onErrorResponse TAG", error.getMessage(), error);
-            Toast.makeText(ArticleActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
             if (srl.isRefreshing()) {
                 srl.setRefreshing(false);
             }
+            load.dismiss();
+            Toast.makeText(ArticleActivity.this, "可能网络出错了", Toast.LENGTH_SHORT).show();
         }
     });
 

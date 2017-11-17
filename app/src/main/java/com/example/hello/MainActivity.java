@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.hello.activity.ArticleActivity;
 import com.example.hello.activity.CatActivity;
+import com.example.hello.activity.KissActivity;
 import com.example.hello.activity.MovieActivity;
 import com.example.hello.activity.WallpaperActivity;
 import com.example.hello.activity.WeatherActivity;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
             R.string.notice_random4, R.string.notice_random5, R.string.notice_random6};
     private int position;
 
-    private ImageView tv_bg;
+    private ImageView iv_bg;
 
 
     @Override
@@ -74,7 +75,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        tv_bg = findViewById(R.id.tv_bg);
+        iv_bg = findViewById(R.id.iv_bg);
+
     }
 
     @Override
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         String bg = Constant.BG + new Random().nextInt(Constant.BG_AMOUNT) + Constant.BG_TYPE;
         Glide.with(this)
                 .load(bg)
-                .into(tv_bg);
+                .into(iv_bg);
     }
 
 
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            intent = new Intent(this, KissActivity.class);
         }
         //先关闭,再跳转
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
