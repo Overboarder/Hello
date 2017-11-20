@@ -4,6 +4,8 @@
     <item name="ic_menu_sun" type="drawable">@mipmap/icon_sun</item>
     <item name="ic_menu_pic" type="drawable">@mipmap/icon_hand</item>
     <item name="ic_menu_movie" type="drawable">@mipmap/icon_movie</item>
-    <item name="ic_menu_share" type="drawable">@mipmap/icon_book</item>
+    <item name="ic_menu_note" type="drawable">@mipmap/icon_note</item>
     <item name="ic_menu_send" type="drawable">@mipmap/icon_book</item>
+
+
 </resources>

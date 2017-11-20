@@ -24,6 +24,7 @@ import com.example.hello.activity.ArticleActivity;
 import com.example.hello.activity.CatActivity;
 import com.example.hello.activity.KissActivity;
 import com.example.hello.activity.MovieActivity;
+import com.example.hello.activity.NoteActivity;
 import com.example.hello.activity.WallpaperActivity;
 import com.example.hello.activity.WeatherActivity;
 import com.example.hello.bean.WeaBean;
@@ -120,8 +121,8 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, WallpaperActivity.class);
         } else if (id == R.id.nav_movie) {
             intent = new Intent(this, MovieActivity.class);
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_note) {
+            intent = new Intent(this, NoteActivity.class);
         } else if (id == R.id.nav_send) {
             intent = new Intent(this, KissActivity.class);
         }
