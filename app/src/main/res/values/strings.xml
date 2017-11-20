@@ -18,7 +18,6 @@
     <string name="city_yancheng">盐城</string>
     <string name="city_wuxi">无锡</string>
 
-
     <!--Weather-->
     <string name="wea_1">晴</string>
     <string name="wea_2">多云</string>
@@ -37,6 +36,11 @@
     <string name="wea_15">冷</string>
     <string name="wea_16">热</string>
     <string name="wea_17">未知</string>
+
+
+    <!--Note-->
+    <string name="tip_title">标题</string>
+    <string name="tip_content">记事</string>
 
 
 </resources>

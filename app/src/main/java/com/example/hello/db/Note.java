@@ -18,7 +18,11 @@ public class Note extends RealmObject {
 
     private int type;//0.未分组1.临时2.工作
 
-    private int status;//1.可见2.回收站
+    private int status;//0.可见1.回收站
+
+    private long createTime;
+
+    private long updateTime;
 
 
     public String getId() {
@@ -59,5 +63,22 @@ public class Note extends RealmObject {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
     }
 }

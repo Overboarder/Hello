@@ -59,6 +59,10 @@
             android:name=".activity.NoteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NormalNoActionBar" />
+        <activity
+            android:name=".activity.NoteDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NormalNoActionBar" />
 
 
     </application>
