@@ -16,6 +16,7 @@ import com.example.hello.R;
 import com.example.hello.adapter.CatAdapter;
 import com.example.hello.bean.CatBean;
 import com.example.hello.constant.Constant;
+import com.example.hello.interf.OnItemClickListener;
 import com.example.hello.util.JsonU;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -78,13 +79,13 @@ public class CatActivity extends AppCompatActivity {
         rlv.setHasFixedSize(true);
         rlv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         rlv.setAdapter(catAdapter);
-        catAdapter.setOnItemClickListener(new CatAdapter.OnItemClickListener() {
+        catAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent i = new Intent(CatActivity.this, VpActivity.class);
                 i.putExtra("index", position);
                 i.putStringArrayListExtra("imageUrls", getUrls());
-//                startActivity(i);
+                startActivity(i);
             }
         });
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -149,7 +150,7 @@ public class CatActivity extends AppCompatActivity {
     private ArrayList<String> getUrls() {
         ArrayList<String> str = new ArrayList<>();
         for (CatBean.DataBean.RagdollBean ra : cats) {
-            str.add(ra.getImageurl());
+            str.add(Constant.TOKEN + ra.getImageurl());
         }
         return str;
     }

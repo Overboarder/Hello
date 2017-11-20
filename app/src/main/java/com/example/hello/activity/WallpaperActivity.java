@@ -1,5 +1,6 @@
 package com.example.hello.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,7 @@ import com.example.hello.adapter.WallAdapter;
 import com.example.hello.bean.CatBean;
 import com.example.hello.bean.WallBean;
 import com.example.hello.constant.Constant;
+import com.example.hello.interf.OnItemClickListener;
 import com.example.hello.util.JsonU;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -39,8 +41,8 @@ public class WallpaperActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout srl;
 
-    private WallAdapter catAdapter;
-    private List<WallBean.DataBean.HandBean> cats;
+    private WallAdapter adapter;
+    private List<WallBean.DataBean.HandBean> datas;
 
     private CatLoadingView view;
 
@@ -55,8 +57,8 @@ public class WallpaperActivity extends AppCompatActivity {
     }
 
     private void init() {
-        cats = new ArrayList<>();
-        catAdapter = new WallAdapter(cats, this);
+        datas = new ArrayList<>();
+        adapter = new WallAdapter(datas, this);
     }
 
     private void initView() {
@@ -77,7 +79,16 @@ public class WallpaperActivity extends AppCompatActivity {
 
         rlv.setHasFixedSize(true);
         rlv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        rlv.setAdapter(catAdapter);
+        rlv.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent i = new Intent(WallpaperActivity.this, VpActivity.class);
+                i.putExtra("index", position);
+                i.putStringArrayListExtra("imageUrls", getUrls());
+                startActivity(i);
+            }
+        });
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -110,9 +121,9 @@ public class WallpaperActivity extends AppCompatActivity {
                         WallBean catBean = JsonU.GsonToBean(response, WallBean.class);
                         if (null != catBean) {
                             if (null != catBean.getData().getHand() && catBean.getData().getHand().size() > 0) {
-                                cats.clear();
-                                cats.addAll(catBean.getData().getHand());
-                                catAdapter.notifyDataSetChanged();
+                                datas.clear();
+                                datas.addAll(catBean.getData().getHand());
+                                adapter.notifyDataSetChanged();
                             }
                         } else {
                             Log.e(TAG, "null == catBean");
@@ -135,6 +146,13 @@ public class WallpaperActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
+    private ArrayList<String> getUrls() {
+        ArrayList<String> str = new ArrayList<>();
+        for (WallBean.DataBean.HandBean ra : datas) {
+            Log.e(TAG, "Constant.TOKEN + ra.getImageurl()==" + Constant.TOKEN + ra.getImageurl());
+            str.add(Constant.TOKEN + ra.getImageurl());
+        }
+        return str;
+    }
 }
 

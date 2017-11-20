@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.example.hello.R;
 import com.example.hello.bean.CatBean;
 import com.example.hello.constant.Constant;
+import com.example.hello.interf.OnItemClickListener;
 
 import java.util.List;
 
@@ -25,13 +26,8 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.ViewHolder> impl
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取position
-            mOnItemClickListener.onItemClick(v,(int)v.getTag());
+            mOnItemClickListener.onItemClick(v, (int) v.getTag());
         }
-    }
-
-    //define interface
-    public static interface OnItemClickListener {
-        void onItemClick(View view , int position);
     }
 
     private List<CatBean.DataBean.RagdollBean> datas;
