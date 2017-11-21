@@ -27,12 +27,14 @@ import com.example.hello.activity.MovieActivity;
 import com.example.hello.activity.NoteActivity;
 import com.example.hello.activity.WallpaperActivity;
 import com.example.hello.activity.WeatherActivity;
+import com.example.hello.bean.DayBean;
 import com.example.hello.bean.WeaBean;
 import com.example.hello.constant.Constant;
 import com.example.hello.util.JsonU;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import okhttp3.Call;
@@ -78,19 +80,33 @@ public class MainActivity extends AppCompatActivity
 
         iv_bg = findViewById(R.id.iv_bg);
 
+        getHoliday();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setBg();
+        checkTime();
     }
 
-    private void setBg() {
-        String bg = Constant.BG + new Random().nextInt(Constant.BG_AMOUNT) + Constant.BG_TYPE;
-        Glide.with(this)
-                .load(bg)
-                .into(iv_bg);
+    private void checkTime() {
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        if (hour >= 0 && hour < 7) {
+            Glide.with(this)
+                    .asGif()
+                    .load(R.drawable.bg_midnight)
+                    .into(iv_bg);
+        } else if (hour >= 7 && hour < 18) {
+            Glide.with(this)
+                    .asGif()
+                    .load(R.drawable.bg_day)
+                    .into(iv_bg);
+        } else if (hour >= 18 && hour < 24) {
+            Glide.with(this)
+                    .asGif()
+                    .load(R.drawable.bg_night)
+                    .into(iv_bg);
+        }
     }
 
 
@@ -132,6 +148,30 @@ public class MainActivity extends AppCompatActivity
         if (null != intent)
             startActivity(intent);
         return true;
+    }
+
+
+    private void getHoliday() {
+        OkHttpUtils
+                .get()
+                .url(Constant.HOLIDAY)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        DayBean bean = JsonU.GsonToBean(response, DayBean.class);
+                        if (null != bean) {
+                            if (null != bean.getData().getFestivalList() && bean.getData().getFestivalList().size() > 0) {
+                                Log.e(TAG, "bean.getData().getFestivalList().get(0)==" + bean.getData().getFestivalList().get(0));
+                                getSupportActionBar().setTitle(bean.getData().getFestivalList().get(0));
+                            }
+                        }
+                    }
+                });
     }
 
 

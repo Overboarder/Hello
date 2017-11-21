@@ -20,8 +20,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/ll_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:padding="10dp">
 

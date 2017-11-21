@@ -43,6 +43,7 @@ public class KissActivity extends AppCompatActivity implements View.OnClickListe
         iv_kiss.setOnClickListener(this);
 
         Glide.with(this)
+                .asGif()
                 .load(R.drawable.xiaohuangren)
                 .into(iv_kiss);
     }

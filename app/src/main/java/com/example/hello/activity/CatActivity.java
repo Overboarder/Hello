@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.hello.R;
 import com.example.hello.adapter.CatAdapter;
 import com.example.hello.bean.CatBean;
+import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
 import com.example.hello.interf.OnItemClickListener;
 import com.example.hello.util.JsonU;
@@ -88,6 +89,7 @@ public class CatActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        srl.setColorSchemeResources(ConsLocal.colors);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

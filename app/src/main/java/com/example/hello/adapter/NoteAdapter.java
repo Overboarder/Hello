@@ -6,17 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hello.R;
 import com.example.hello.bean.CatBean;
+import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
 import com.example.hello.db.Note;
 import com.example.hello.interf.OnItemClickListener;
 import com.example.hello.interf.OnItemLongClickListener;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by john on 2017/11/16.
@@ -36,7 +39,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
     public boolean onLongClick(View v) {
         if (mOnItemLongClickListener != null) {
             //注意这里使用getTag方法获取position
-            mOnItemLongClickListener.onItemClick(v, (int) v.getTag());
+            mOnItemLongClickListener.onItemLongClick(v, (int) v.getTag());
             return true;
         }
         return false;
@@ -65,6 +68,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
 
     @Override
     public void onBindViewHolder(NoteAdapter.ViewHolder holder, int position) {
+        holder.ll_item_note.setBackgroundResource(ConsLocal.noteBg[datas.get(position).getStyle()]);
+        holder.tv_title.setText(datas.get(position).getTitle());
         holder.tv_info.setText(datas.get(position).getContent());
         holder.itemView.setTag(position);
     }
@@ -76,10 +81,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_info;
+        TextView tv_title, tv_info;
+        LinearLayout ll_item_note;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ll_item_note = itemView.findViewById(R.id.ll_item_note);
+            tv_title = itemView.findViewById(R.id.tv_title);
             tv_info = itemView.findViewById(R.id.tv_info);
         }
     }

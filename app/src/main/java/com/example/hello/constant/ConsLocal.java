@@ -27,5 +27,13 @@ public class ConsLocal {
             R.string.wea_12, R.string.wea_13, R.string.wea_14, R.string.wea_15,
             R.string.wea_16, R.string.wea_17};
 
+    //Note背景
+    public static final int[] noteBg = {R.drawable.bg_note1, R.drawable.bg_note2, R.drawable.bg_note3,
+            R.drawable.bg_note4, R.drawable.bg_note5, R.drawable.bg_note6, R.drawable.bg_note7};
+
+
+    //Note背景
+    public static final int[] colors = {R.color.red, R.color.yellow, R.color.blue, R.color.green};
+
 
 }

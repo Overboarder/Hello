@@ -17,6 +17,7 @@ import com.example.hello.adapter.MovieAdapter;
 import com.example.hello.adapter.WallAdapter;
 import com.example.hello.bean.MovieBean;
 import com.example.hello.bean.WallBean;
+import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
 import com.example.hello.util.JsonU;
 import com.roger.catloadinglibrary.CatLoadingView;
@@ -78,6 +79,7 @@ public class MovieActivity extends AppCompatActivity {
         rlv.setHasFixedSize(true);
         rlv.setLayoutManager(new LinearLayoutManager(this));
         rlv.setAdapter(movieAdapter);
+        srl.setColorSchemeResources(ConsLocal.colors);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

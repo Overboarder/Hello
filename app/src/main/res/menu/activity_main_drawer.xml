@@ -39,7 +39,7 @@
         </menu>
     </item>
 
-    <item android:title="for Sherry">
+    <item android:title="Only for Sherry">
         <menu>
             <item android:title="" />
         </menu>

@@ -8,6 +8,7 @@ public class Constant {
 
     public static final String TOKEN = "https://curiousbaby.github.io";
     //私有api
+    //暂时不用,本地gif替换
     public static final String BG = TOKEN + "/hello/file/images/bg/";
     public static final int BG_AMOUNT = 11;
     public static final String BG_TYPE = ".jpg";
@@ -34,5 +35,7 @@ public class Constant {
     //猫眼电影
     public static final String MOVIE = "http://m.maoyan.com/movie/list.json?type=hot&offset=0&limit=1000";
 
+    //节日提醒
+    public static final String HOLIDAY = "http://www.sojson.com/open/api/lunar/json.shtml";
 
 }

@@ -17,6 +17,7 @@ import com.example.hello.adapter.CatAdapter;
 import com.example.hello.adapter.WallAdapter;
 import com.example.hello.bean.CatBean;
 import com.example.hello.bean.WallBean;
+import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
 import com.example.hello.interf.OnItemClickListener;
 import com.example.hello.util.JsonU;
@@ -89,6 +90,7 @@ public class WallpaperActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        srl.setColorSchemeResources(ConsLocal.colors);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

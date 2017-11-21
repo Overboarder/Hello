@@ -75,6 +75,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         srl_main = findViewById(R.id.srl_main);
+        srl_main.setColorSchemeResources(ConsLocal.colors);
         srl_main.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -113,7 +114,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         getData(true);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
