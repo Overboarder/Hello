@@ -29,7 +29,9 @@ import com.example.hello.activity.WallpaperActivity;
 import com.example.hello.activity.WeatherActivity;
 import com.example.hello.bean.DayBean;
 import com.example.hello.bean.WeaBean;
+import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
+import com.example.hello.util.DateU;
 import com.example.hello.util.JsonU;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -44,9 +46,6 @@ public class MainActivity extends AppCompatActivity
 
     public final String TAG = getClass().getSimpleName();
 
-    private static final int[] notices = {R.string.notice_random1,
-            R.string.notice_random2, R.string.notice_random3,
-            R.string.notice_random4, R.string.notice_random5, R.string.notice_random6};
     private int position;
 
     private ImageView iv_bg;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, notices[position % 6], Snackbar.LENGTH_LONG)
+                Snackbar.make(view, ConsLocal.notices[position % 6], Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 position++;
             }
@@ -86,8 +85,36 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        checkTime();
+        switch (DateU.dayType()) {
+            case 0:
+                checkTime();
+                break;
+            case 1:
+                setSnow();
+                getSupportActionBar().setTitle("小雪");
+                break;
+            case 2:
+                setThanks();
+                getSupportActionBar().setTitle("感恩节");
+                break;
+            default:
+                checkTime();
+                break;
+        }
     }
+
+    private void setSnow() {
+        Glide.with(this)
+                .load(ConsLocal.snow[new Random().nextInt(ConsLocal.snow.length)])
+                .into(iv_bg);
+    }
+
+    private void setThanks() {
+        Glide.with(this)
+                .load(R.mipmap.thanks)
+                .into(iv_bg);
+    }
+
 
     private void checkTime() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);

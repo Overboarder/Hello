@@ -9,6 +9,10 @@ import com.example.hello.R;
 public class ConsLocal {
 
 
+    public static final int[] notices = {R.string.notice_random1,
+            R.string.notice_random2, R.string.notice_random3,
+            R.string.notice_random4, R.string.notice_random5, R.string.notice_random6};
+
     //天气种类简化
     public static final int[] weaBg = {R.drawable.bg_wea1, R.drawable.bg_wea2, R.drawable.bg_wea3,
             R.drawable.bg_wea4, R.drawable.bg_wea5, R.drawable.bg_wea6, R.drawable.bg_wea7,
@@ -36,4 +40,8 @@ public class ConsLocal {
     public static final int[] colors = {R.color.red, R.color.yellow, R.color.blue, R.color.green};
 
 
+    public static final int[] snow = {R.mipmap.snow1, R.mipmap.snow2, R.mipmap.snow3,
+            R.mipmap.snow4, R.mipmap.snow5, R.mipmap.snow6, R.mipmap.snow7,
+            R.mipmap.snow8, R.mipmap.snow9, R.mipmap.snow10, R.mipmap.snow11,
+            R.mipmap.snow12, R.mipmap.snow13, R.mipmap.snow14, R.mipmap.snow15};
 }
