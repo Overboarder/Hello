@@ -14,6 +14,7 @@ public class Constant {
     public static final String BG_TYPE = ".jpg";
     public static final String CAT = TOKEN + "/hello/api/cat.json";
     public static final String WALLPAPER = TOKEN + "/hello/api/wallpaper.json";
+    public static final String UPDATE = TOKEN + "/hello/api/helloversion.json";
 
     //公共api
     public static final String PUBLIC = "https://github.com/jokermonn/-Api";

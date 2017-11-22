@@ -69,7 +69,7 @@ public class NoteActivity extends AppCompatActivity {
         view = new CatLoadingView();
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.arrow_back);
-        toolbar.setTitle("这叫什么呢");
+        toolbar.setTitle("这到底叫什么");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

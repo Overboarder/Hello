@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,8 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.hello.activity.ArticleActivity;
@@ -25,16 +20,25 @@ import com.example.hello.activity.CatActivity;
 import com.example.hello.activity.KissActivity;
 import com.example.hello.activity.MovieActivity;
 import com.example.hello.activity.NoteActivity;
+import com.example.hello.activity.SettingActivity;
 import com.example.hello.activity.WallpaperActivity;
 import com.example.hello.activity.WeatherActivity;
 import com.example.hello.bean.DayBean;
-import com.example.hello.bean.WeaBean;
 import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
+import com.example.hello.update.UpdateAppHttpUtil;
 import com.example.hello.util.DateU;
 import com.example.hello.util.JsonU;
+import com.example.hello.util.L;
+import com.vector.update_app.UpdateAppBean;
+import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
+import com.vector.update_app.utils.AppUpdateUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -80,6 +84,85 @@ public class MainActivity extends AppCompatActivity
         iv_bg = findViewById(R.id.iv_bg);
 
         getHoliday();
+
+        //自动检查是否有新版本
+        updateApp();
+    }
+
+    public void updateApp() {
+        final int versionCode = AppUpdateUtils.getVersionCode(this);
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(Constant.UPDATE)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .build()
+                .checkNewApp(new UpdateCallback() {
+                    /**
+                     * 解析json,自定义协议
+                     *
+                     * @param json 服务器返回的json
+                     * @return UpdateAppBean
+                     */
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+                        try {
+                            L.e(TAG, "json==" + json);
+                            JSONObject jsonObject = new JSONObject(json);
+                            updateAppBean
+                                    //（必须）是否更新Yes,No
+                                    .setUpdate(jsonObject.optInt("versioncode") > versionCode ? "Yes" : "No")
+                                    //（必须）新版本号，
+                                    .setNewVersion(jsonObject.optString("new_version"))
+                                    //（必须）下载地址
+                                    .setApkFileUrl(jsonObject.optString("apk_file_url"))
+                                    //（必须）更新内容
+                                    .setUpdateLog(jsonObject.optString("update_log"))
+                                    //大小，不设置不显示大小，可以不设置
+                                    .setTargetSize(jsonObject.optString("target_size"))
+                                    //是否强制更新，可以不设置
+                                    .setConstraint(false)
+                                    //设置md5，可以不设置
+                                    .setNewMd5(jsonObject.optString("new_md51"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        updateAppManager.showDialogFragment();
+                    }
+
+                    /**
+                     * 网络请求之前
+                     */
+                    @Override
+                    public void onBefore() {
+//                        CProgressDialogUtils.showProgressDialog(MainActivity.this);
+                    }
+
+                    /**
+                     * 网路请求之后
+                     */
+                    @Override
+                    public void onAfter() {
+//                        CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+                    }
+
+                    /**
+                     * 没有新版本
+                     */
+                    @Override
+                    public void noNewApp() {
+
+                    }
+                });
     }
 
     @Override
@@ -168,6 +251,8 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, NoteActivity.class);
         } else if (id == R.id.nav_send) {
             intent = new Intent(this, KissActivity.class);
+        } else if (id == R.id.nav_about) {
+            intent = new Intent(this, SettingActivity.class);
         }
         //先关闭,再跳转
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -192,10 +277,12 @@ public class MainActivity extends AppCompatActivity
                     public void onResponse(String response, int id) {
                         DayBean bean = JsonU.GsonToBean(response, DayBean.class);
                         if (null != bean) {
-                            if (null != bean.getData().getFestivalList() && bean.getData().getFestivalList().size() > 0) {
-                                Log.e(TAG, "bean.getData().getFestivalList().get(0)==" + bean.getData().getFestivalList().get(0));
-                                getSupportActionBar().setTitle(bean.getData().getFestivalList().get(0));
-                            }
+//                            if (null == bean.getData().getFestivalList()) {
+//                                L.e(TAG, "null == bean.getData().getFestivalList()");
+//                            } else if (bean.getData().getFestivalList().size() > 0) {
+//                                L.e(TAG, "bean.getData().getFestivalList().size() > 0");
+//                                getSupportActionBar().setTitle(bean.getData().getFestivalList().get(0));
+//                            }
                         }
                     }
                 });

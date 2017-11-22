@@ -31,11 +31,15 @@
             <item
                 android:id="@+id/nav_note"
                 android:icon="@drawable/ic_menu_note"
-                android:title="这叫什么呢" />
+                android:title="这到底叫什么" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="Setting" />
         </menu>
     </item>
 

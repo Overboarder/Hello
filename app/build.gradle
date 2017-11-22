@@ -8,7 +8,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,4 +37,9 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
 
     compile 'com.roger.catloadinglibrary:catloadinglibrary:1.0.1'
+
+    compile 'com.qianwen:update-app:3.3.8'
+    compile 'io.reactivex:rxjava:1.2.9'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
 }
