@@ -40,8 +40,4 @@ public class ConsLocal {
     public static final int[] colors = {R.color.red, R.color.yellow, R.color.blue, R.color.green};
 
 
-    public static final int[] snow = {R.mipmap.snow1, R.mipmap.snow2, R.mipmap.snow3,
-            R.mipmap.snow4, R.mipmap.snow5, R.mipmap.snow6, R.mipmap.snow7,
-            R.mipmap.snow8, R.mipmap.snow9, R.mipmap.snow10, R.mipmap.snow11,
-            R.mipmap.snow12, R.mipmap.snow13, R.mipmap.snow14, R.mipmap.snow15};
 }

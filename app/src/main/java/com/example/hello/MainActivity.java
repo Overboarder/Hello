@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
 
     private int position;
 
-    private ImageView iv_bg;
+    private ImageView  iv_bg;
 
 
     @Override
@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity
 
         iv_bg = findViewById(R.id.iv_bg);
 
-        getHoliday();
+//        getHoliday();
+
 
         //自动检查是否有新版本
         updateApp();
@@ -168,35 +169,36 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        switch (DateU.dayType()) {
-            case 0:
-                checkTime();
-                break;
-            case 1:
-                setSnow();
-                getSupportActionBar().setTitle("小雪");
-                break;
-            case 2:
-                setThanks();
-                getSupportActionBar().setTitle("感恩节");
-                break;
-            default:
-                checkTime();
-                break;
-        }
+        checkTime();
+//        switch (DateU.dayType()) {
+//            case 0:
+//                checkTime();
+//                break;
+//            case 1:
+//                setSnow();
+//                getSupportActionBar().setTitle("小雪");
+//                break;
+//            case 2:
+//                setThanks();
+//                getSupportActionBar().setTitle("感恩节");
+//                break;
+//            default:
+//                checkTime();
+//                break;
+//        }
     }
 
-    private void setSnow() {
-        Glide.with(this)
-                .load(ConsLocal.snow[new Random().nextInt(ConsLocal.snow.length)])
-                .into(iv_bg);
-    }
-
-    private void setThanks() {
-        Glide.with(this)
-                .load(R.mipmap.thanks)
-                .into(iv_bg);
-    }
+//    private void setSnow() {
+//        Glide.with(this)
+//                .load(ConsLocal.snow[new Random().nextInt(ConsLocal.snow.length)])
+//                .into(iv_bg);
+//    }
+//
+//    private void setThanks() {
+//        Glide.with(this)
+//                .load(R.mipmap.thanks)
+//                .into(iv_bg);
+//    }
 
 
     private void checkTime() {
