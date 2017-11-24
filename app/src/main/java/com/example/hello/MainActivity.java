@@ -2,9 +2,6 @@ package com.example.hello;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,10 +21,8 @@ import com.example.hello.activity.SettingActivity;
 import com.example.hello.activity.WallpaperActivity;
 import com.example.hello.activity.WeatherActivity;
 import com.example.hello.bean.DayBean;
-import com.example.hello.constant.ConsLocal;
 import com.example.hello.constant.Constant;
 import com.example.hello.update.UpdateAppHttpUtil;
-import com.example.hello.util.DateU;
 import com.example.hello.util.JsonU;
 import com.example.hello.util.L;
 import com.vector.update_app.UpdateAppBean;
@@ -41,7 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.Random;
 
 import okhttp3.Call;
 
@@ -50,9 +44,9 @@ public class MainActivity extends AppCompatActivity
 
     public final String TAG = getClass().getSimpleName();
 
-    private int position;
+//    private int position;
 
-    private ImageView  iv_bg;
+    private ImageView iv_bg;
 
 
     @Override
@@ -62,15 +56,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, ConsLocal.notices[position % 6], Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                position++;
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, ConsLocal.notices[position % 6], Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//                position++;
+//            }
+//        });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -82,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         iv_bg = findViewById(R.id.iv_bg);
+
 
 //        getHoliday();
 
@@ -289,6 +284,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
     }
+
 
 
 }
