@@ -52,7 +52,6 @@ public class ArticleActivity extends AppCompatActivity {
         getData();
     }
 
-
     private void initView() {
         load = new CatLoadingView();
 
@@ -153,9 +152,7 @@ public class ArticleActivity extends AppCompatActivity {
         toolbar.setTitle(articleBean.getData().getTitle());
         tv_title.setText(articleBean.getData().getTitle());
         tv_author_wc.setText(articleBean.getData().getAuthor() + "  " + articleBean.getData().getWc() + "字");
-        Log.e(TAG, "--------" + articleBean.getData().getContent());
         tv_content.setText(Html.fromHtml(articleBean.getData().getContent()));
-        Log.e(TAG, "--------" + Html.fromHtml(articleBean.getData().getContent()));
     }
 
 }
