@@ -183,19 +183,6 @@ public class MainActivity extends AppCompatActivity
 //        }
     }
 
-//    private void setSnow() {
-//        Glide.with(this)
-//                .load(ConsLocal.snow[new Random().nextInt(ConsLocal.snow.length)])
-//                .into(iv_bg);
-//    }
-//
-//    private void setThanks() {
-//        Glide.with(this)
-//                .load(R.mipmap.thanks)
-//                .into(iv_bg);
-//    }
-
-
     private void checkTime() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if (hour >= 0 && hour < 7) {
