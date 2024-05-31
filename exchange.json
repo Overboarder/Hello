@@ -1,5 +1,4 @@
-
-[
+{"content":[
 {"name":"特仑苏","price":65,"spec":""},
 {"name":"莫斯利安","price":60,"spec":""},
 {"name":"养乐多","price":14,"spec":"正常"},
@@ -28,4 +27,4 @@
 {"name":"椰子汁硬","price":105,"spec":"  "},
 {"name":"六个核桃","price":105,"spec":"  "}
 
-]
+]}
