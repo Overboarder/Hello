@@ -1,0 +1,31 @@
+
+[
+{"name":"特仑苏","price":65,"spec":""},
+{"name":"莫斯利安","price":60,"spec":""},
+{"name":"养乐多","price":14,"spec":"正常"},
+{"name":"养乐多","price":15,"spec":"低糖"},
+{"name":"旺仔","price":60,"spec":"  "},
+{"name":"奶特","price":60,"spec":"  "},
+{"name":"油","price":80,"spec":"4.5L"},
+{"name":"油","price":36,"spec":"1.8L"},
+{"name":"米","price":60,"spec":"10kg"},
+{"name":"王老吉","price":4,"spec":"  "},
+{"name":"水溶C","price":5,"spec":"  "},
+{"name":"伊利纯牛奶","price":80,"spec":"  "},
+{"name":"安慕希","price":65,"spec":"原味"},
+{"name":"安慕希","price":70,"spec":"黄桃"},
+{"name":"哇哈哈AD钙奶","price":50,"spec":"  "},
+{"name":"雪碧可乐","price":4,"spec":"瓶"},
+{"name":"元气森林","price":5,"spec":"15瓶/箱"},
+{"name":"方便面","price":60,"spec":"一箱"},
+{"name":"雀巢咖啡","price":6,"spec":"15瓶/箱"},
+{"name":"汤达人","price":6,"spec":""},
+{"name":"康师傅","price":5,"spec":"  "},
+{"name":"乌龙茶","price":4,"spec":"  "},
+{"name":"哇哈哈八宝粥","price":40,"spec":"  "},
+{"name":"亲亲/银鹭八宝粥","price":60,"spec":"  "},
+{"name":"椰子汁软","price":95,"spec":"  "},
+{"name":"椰子汁硬","price":105,"spec":"  "},
+{"name":"六个核桃","price":105,"spec":"  "}
+
+]
